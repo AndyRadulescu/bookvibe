@@ -19,12 +19,11 @@ class SearchBookController(private val bookService: SearchBookService, private v
         return bookService.searchBook(queryParam)
     }
 
-    @RabbitListener(queues = ["books"], id = "searchForTitle")
-    fun consumeMessages(message: SearchDto<BookDto>): Flux<SearchVolumeList> {
+    @RabbitListener(queues = ["books"])
+    fun consumeMessages(message: SearchDto<BookDto>): SearchVolumeList? {
         println(message)
         val searchedVolumeListFlux = bookService.searchBook(message.data.book)
-        searchedVolumeListFlux.subscribe{println(it)}
-        return searchedVolumeListFlux
+        return searchedVolumeListFlux.blockFirst()
     }
 
 }

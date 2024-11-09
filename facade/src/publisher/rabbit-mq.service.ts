@@ -14,7 +14,7 @@ export class RabbitMQService {
     });
   }
 
-  sendNotification() {
-    return this.client.send('search', {book:"Lord%20of%20the%20rings", id:'searchForTitle'});
+  searchBooks() {
+    return this.client.send('search', {book:"Lord of the rings", id:'searchForTitle'});
   }
 }
