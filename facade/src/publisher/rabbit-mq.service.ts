@@ -8,13 +8,13 @@ export class RabbitMQService {
       transport: Transport.RMQ,
       options: {
         urls: ['amqp://localhost:5672'],
-        queue: 'worker',
+        queue: 'books',
         queueOptions: { durable: true },
       },
     });
   }
 
   sendNotification() {
-    return this.client.send('message', '');
+    return this.client.send('search', {book:"Lord%20of%20the%20rings", id:'searchForTitle'});
   }
 }

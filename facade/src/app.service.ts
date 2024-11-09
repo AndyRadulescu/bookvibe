@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { RabbitMQService } from './publisher/RabbitMQService';
+import { RabbitMQService } from './publisher/rabbit-mq.service';
 
 @Injectable()
 export class AppService {

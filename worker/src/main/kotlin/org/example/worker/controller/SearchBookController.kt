@@ -1,9 +1,9 @@
 package org.example.worker.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import org.example.worker.dto.BookDto
 import org.example.worker.dto.SearchDto
+import org.example.worker.dto.SearchVolumeList
 import org.example.worker.service.SearchBookService
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.web.bind.annotation.GetMapping
@@ -15,16 +15,16 @@ import reactor.core.publisher.Flux
 @RestController
 class SearchBookController(private val bookService: SearchBookService, private val mapper: ObjectMapper) {
     @GetMapping("/search")
-    fun searchBook(@RequestParam queryParam: String): Flux<Any> {
+    fun searchBook(@RequestParam queryParam: String): Flux<SearchVolumeList> {
         return bookService.searchBook(queryParam)
     }
 
-    @RabbitListener(queues = ["books"])
-    fun consumeMessages(message: String): Flux<Any> {
+    @RabbitListener(queues = ["books"], id = "searchForTitle")
+    fun consumeMessages(message: SearchDto<BookDto>): Flux<SearchVolumeList> {
         println(message)
-        val mappedVal = mapper.readValue<SearchDto<BookDto>>(message)
-        println(mappedVal)
-        return bookService.searchBook(mappedVal.data.book)
+        val searchedVolumeListFlux = bookService.searchBook(message.data.book)
+        searchedVolumeListFlux.subscribe{println(it)}
+        return searchedVolumeListFlux
     }
 
 }
