@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { BooksController } from './books.controller';
+import { BooksService } from './books.service';
 import { RabbitMQService } from './publisher/rabbit-mq.service';
 
 @Module({
   imports: [],
-  controllers: [AppController],
-  providers: [AppService, RabbitMQService],
+  controllers: [BooksController],
+  providers: [BooksService, RabbitMQService],
 })
 export class AppModule {
 }

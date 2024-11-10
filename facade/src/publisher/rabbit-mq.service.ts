@@ -1,20 +1,35 @@
 import { ClientProxy, ClientProxyFactory, Transport } from '@nestjs/microservices';
 
 export class RabbitMQService {
-  private client: ClientProxy;
+  private searchBook: ClientProxy;
+  private isbn: ClientProxy;
 
   constructor() {
-    this.client = ClientProxyFactory.create({
+    this.searchBook = ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {
         urls: ['amqp://localhost:5672'],
-        queue: 'books',
+        queue: 'searchBooks',
+        queueOptions: { durable: true },
+      },
+    });
+    this.isbn = ClientProxyFactory.create({
+      transport: Transport.RMQ,
+      options: {
+        urls: ['amqp://localhost:5672'],
+        queue: 'isbn',
         queueOptions: { durable: true },
       },
     });
   }
 
-  searchBooks() {
-    return this.client.send('search', {book:"Lord of the rings", id:'searchForTitle'});
+  searchBooksByName(name: String) {
+    console.log(name)
+    return this.searchBook.send('searchBooks', { book: name });
+  }
+
+  searchBookByIsbn(isbn: String) {
+    console.log(isbn)
+    return this.isbn.send('isbn', { isbn: isbn });
   }
 }
