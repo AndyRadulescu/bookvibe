@@ -3,7 +3,7 @@ import {catchError} from '../utils/utils.ts';
 
 export const getBookByISBN = async (isbn: string) => {
     const [err, response] = await catchError(axios
-        .get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`));
+        .get(`http://localhost:3000/isbn/${isbn}`));
     if (err) {
         console.log(err);
     }

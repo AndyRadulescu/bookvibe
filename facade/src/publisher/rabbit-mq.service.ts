@@ -24,12 +24,10 @@ export class RabbitMQService {
   }
 
   searchBooksByName(name: String) {
-    console.log(name)
     return this.searchBook.send('searchBooks', { book: name });
   }
 
   searchBookByIsbn(isbn: String) {
-    console.log(isbn)
     return this.isbn.send('isbn', { isbn: isbn });
   }
 }
