@@ -1,8 +1,8 @@
 import React from 'react';
-import Dashboard from './dashboard/dashboard.tsx';
+import DashboardPage from './dashboard/dashboard-page.tsx';
 
 export default function Root() {
     return (
-        <Dashboard/>
+        <DashboardPage/>
     );
 };
