@@ -1,7 +1,6 @@
 import {createBrowserRouter} from 'react-router-dom';
 import Root from './root';
 import ErrorPage from './error-page';
-import React from 'react';
 import BookPage from './book/book-page.tsx';
 
 export const router = createBrowserRouter([
@@ -11,7 +10,7 @@ export const router = createBrowserRouter([
         errorElement: <ErrorPage/>,
     },
     {
-        path: '/book',
+        path: '/book/:isbn',
         element: <BookPage/>,
     },
 ]);
