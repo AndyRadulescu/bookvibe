@@ -1,13 +1,13 @@
 import {useParams} from 'react-router-dom';
-import {useEffect, useState} from 'react';
-import {getBookByISBN} from '../api/book-service.ts';
+import {useContext, useEffect, useState} from 'react';
+import {bookTransportContext} from '../api/books/transport.ts';
 
 export default function BookPage() {
     const {isbn} = useParams<{ isbn: string }>();
     const [book, setBook] = useState([]);
-
+    const bookTransport = useContext(bookTransportContext());
     useEffect(() => {
-        getBookByISBN(isbn).then(data => setBook(data));
+        bookTransport(isbn).then(data => setBook(data));
     }, []);
 
     return (

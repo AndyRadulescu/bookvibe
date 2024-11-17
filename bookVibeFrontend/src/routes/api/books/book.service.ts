@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {catchError} from '../utils/utils.ts';
+import {catchError} from '../../utils/utils.ts';
 
 export const getBookByISBN = async (isbn: string) => {
     const [err, response] = await catchError(axios
